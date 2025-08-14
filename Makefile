@@ -31,4 +31,24 @@ install-deps-ubuntu:
 	sudo apt-get update
 	sudo apt-get install build-essential gdb
 
-.PHONY: all debug release clean run debug-run install-deps-mac install-deps-ubuntu
+install: $(TARGET)
+	@echo "Installing $(TARGET) to $(DESTDIR)$(PREFIX)/bin..."
+	@mkdir -p $(DESTDIR)$(PREFIX)/bin
+	@cp $(TARGET) $(DESTDIR)$(PREFIX)/bin/
+	@chmod +x $(DESTDIR)$(PREFIX)/bin/$(TARGET)
+	@echo "Installation complete"
+
+uninstall:
+	@echo "Removing $(TARGET) from $(DESTDIR)$(PREFIX)/bin..."
+	@rm -f $(DESTDIR)$(PREFIX)/bin/$(TARGET)
+	@echo "Uninstallation complete"
+
+ifeq ($(OS),Windows_NT)
+    PREFIX ?= /usr/local
+else ifeq ($(shell uname),Darwin)
+    PREFIX ?= /usr/local
+else
+    PREFIX ?= /usr/local
+endif
+
+.PHONY: all debug release clean run debug-run install-deps-mac install-deps-ubuntu install uninstall

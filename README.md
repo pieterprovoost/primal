@@ -2,7 +2,15 @@
 
 Local sequence alignment with IUPAC code support.
 
+## Installation
+
+```bash
+make && make install
 ```
+
+## Usage
+
+``` bash
 ./primal --demo                                               
 === Local sequence alignment ===
 Parameters:
