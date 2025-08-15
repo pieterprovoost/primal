@@ -1,0 +1,16 @@
+EMCC = emcc
+EMCC_FLAGS = -std=c++17 -O3 -s WASM=1 -s EXPORTED_RUNTIME_METHODS='["ccall","cwrap"]' -s ALLOW_MEMORY_GROWTH=1 -lembind
+TARGET = primal.js
+
+wasm: $(TARGET)
+
+$(TARGET): src/wasm_interface.cpp src/alignment_result.cpp src/iupac_handler.cpp src/scoring.cpp src/traceback.cpp src/local_aligner_core.cpp
+	$(EMCC) $(EMCC_FLAGS) -Iinclude -o $(TARGET) src/wasm_interface.cpp src/alignment_result.cpp src/iupac_handler.cpp src/scoring.cpp src/traceback.cpp src/local_aligner_core.cpp
+
+clean-wasm:
+	rm -f $(TARGET) primal.wasm
+
+wasm-debug: EMCC_FLAGS += -g -O0 -s ASSERTIONS=1
+wasm-debug: $(TARGET)
+
+.PHONY: wasm clean-wasm wasm-debug

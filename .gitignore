@@ -2,4 +2,6 @@
 primal
 .vscode
 notes.md
-
+example.html
+primal.wasm
+primal.js
