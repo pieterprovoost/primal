@@ -23,17 +23,14 @@ std::string AlignmentResult::to_alignment_format(int line_width) const {
     for (size_t i = 0; i < aligned_seq1.length(); i += line_width) {
         size_t end_pos = std::min(i + line_width, aligned_seq1.length());
         
-        // Calculate actual sequence positions (excluding gaps)
         int query_pos = start_i;
         int subject_pos = start_j;
         
-        // Count non-gap characters up to current position
         for (size_t k = 0; k < i; ++k) {
             if (aligned_seq1[k] != '-') query_pos++;
             if (aligned_seq2[k] != '-') subject_pos++;
         }
         
-        // Calculate end positions for this block
         int query_end = query_pos;
         int subject_end = subject_pos;
         for (size_t k = i; k < end_pos; ++k) {
@@ -41,23 +38,20 @@ std::string AlignmentResult::to_alignment_format(int line_width) const {
             if (aligned_seq2[k] != '-') subject_end++;
         }
         
-        // Query
         alignment_output += "Query    ";
-        alignment_output += std::to_string(query_pos + 1);
+        alignment_output += std::to_string(query_pos);
         alignment_output += std::string(8 - std::to_string(query_pos + 1).length(), ' ');
         alignment_output += aligned_seq1.substr(i, end_pos - i);
-        alignment_output += " " + std::to_string(query_end) + "\n";
+        alignment_output += " " + std::to_string(query_end - 1) + "\n";
         
-        // Match
         alignment_output += std::string(17, ' ');
         alignment_output += match_line.substr(i, end_pos - i) + "\n";
         
-        // Subject
         alignment_output += "Subject  ";
-        alignment_output += std::to_string(subject_pos + 1);
+        alignment_output += std::to_string(subject_pos);
         alignment_output += std::string(8 - std::to_string(subject_pos + 1).length(), ' ');
         alignment_output += aligned_seq2.substr(i, end_pos - i);
-        alignment_output += " " + std::to_string(subject_end) + "\n";
+        alignment_output += " " + std::to_string(subject_end - 1) + "\n";
     }
     
     return alignment_output;

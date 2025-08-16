@@ -66,10 +66,10 @@ AlignmentResult LocalAligner::traceback(const std::string& seq1, const std::stri
     result.aligned_seq2 = aligned_seq2;
     result.match_line = match_line;
     result.score = score_matrix[start_i][start_j];
-    result.start_i = actual_start_i - 1;
-    result.start_j = actual_start_j - 1;
-    result.end_i = start_i - 1;
-    result.end_j = start_j - 1;
+    result.start_i = actual_start_i;
+    result.start_j = actual_start_j;
+    result.end_i = start_i;
+    result.end_j = start_j;
     result.exact_matches = exact_matches;
     result.iupac_matches = iupac_matches;
     result.mismatches = mismatches;
